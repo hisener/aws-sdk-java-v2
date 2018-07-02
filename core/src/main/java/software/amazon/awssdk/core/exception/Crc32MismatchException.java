@@ -33,12 +33,43 @@ public final class Crc32MismatchException extends SdkClientException {
 
     /**
      * Creates a new CRC32MismatchException with the specified message.
-     *
-     * @param message
-     *            An error message describing why this exception was thrown.
      */
-    public Crc32MismatchException(String message) {
-        super(message);
+    protected Crc32MismatchException(Builder b) {
+        super(b);
     }
 
+    public static Builder builder() {
+        return new BuilderImpl();
+    }
+
+    public interface Builder extends SdkClientException.Builder {
+        @Override
+        Builder message(String message);
+
+        @Override
+        Builder throwable(Throwable t);
+
+        @Override
+        Crc32MismatchException build();
+    }
+
+    protected static final class BuilderImpl extends SdkClientException.BuilderImpl implements Builder {
+
+        @Override
+        public Builder message(String message) {
+            this.message = message;
+            return this;
+        }
+
+        @Override
+        public Builder throwable(Throwable throwable) {
+            this.throwable = throwable;
+            return this;
+        }
+
+        @Override
+        public Crc32MismatchException build() {
+            return new Crc32MismatchException(this);
+        }
+    }
 }

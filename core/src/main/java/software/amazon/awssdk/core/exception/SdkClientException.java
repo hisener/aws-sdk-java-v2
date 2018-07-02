@@ -31,36 +31,43 @@ import software.amazon.awssdk.annotations.SdkPublicApi;
 @SdkPublicApi
 public class SdkClientException extends SdkException {
 
-    /**
-     * Creates a new SdkClientException with the specified message, and root
-     * cause.
-     *
-     * @param message
-     *            An error message describing why this exception was thrown.
-     * @param t
-     *            The underlying cause of this exception.
-     */
-    public SdkClientException(String message, Throwable t) {
-        super(message, t);
+    protected SdkClientException(Builder b) {
+        super(b);
     }
 
-    /**
-     * Creates a new SdkClientException with the specified message.
-     *
-     * @param message
-     *            An error message describing why this exception was thrown.
-     */
-    public SdkClientException(String message) {
-        super(message);
+    public static Builder builder() {
+        return new BuilderImpl();
     }
 
-    /**
-     * Creates a new SdkClientException with the root cause.
-     *
-     * @param t
-     *          The underlying cause of this exception.
-     */
-    public SdkClientException(Throwable t) {
-        super(t);
+    public interface Builder extends SdkException.Builder {
+
+        @Override
+        Builder message(String message);
+
+        @Override
+        Builder throwable(Throwable t);
+
+        @Override
+        SdkClientException build();
+    }
+
+    protected static class BuilderImpl extends SdkException.BuilderImpl implements Builder {
+
+        @Override
+        public Builder message(String message) {
+            this.message = message;
+            return this;
+        }
+
+        @Override
+        public Builder throwable(Throwable throwable) {
+            this.throwable = throwable;
+            return this;
+        }
+
+        @Override
+        public SdkClientException build() {
+            return new SdkClientException(this);
+        }
     }
 }

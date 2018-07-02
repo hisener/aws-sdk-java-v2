@@ -22,12 +22,42 @@ public class ClientExecutionTimeoutException extends SdkClientException {
 
     private static final long serialVersionUID = 4861767589924758934L;
 
-    public ClientExecutionTimeoutException() {
-        this("Client execution did not complete before the specified timeout configuration.");
+    protected ClientExecutionTimeoutException(Builder b) {
+        super(b);
     }
 
-    public ClientExecutionTimeoutException(String message) {
-        super(message);
+    public static Builder builder() {
+        return new BuilderImpl();
     }
 
+    public interface Builder extends SdkClientException.Builder {
+        @Override
+        Builder message(String message);
+
+        @Override
+        Builder throwable(Throwable t);
+
+        @Override
+        ClientExecutionTimeoutException build();
+    }
+
+    protected static final class BuilderImpl extends SdkClientException.BuilderImpl implements Builder {
+
+        @Override
+        public Builder message(String message) {
+            this.message = message;
+            return this;
+        }
+
+        @Override
+        public Builder throwable(Throwable throwable) {
+            this.throwable = throwable;
+            return this;
+        }
+
+        @Override
+        public ClientExecutionTimeoutException build() {
+            return new ClientExecutionTimeoutException(this);
+        }
+    }
 }

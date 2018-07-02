@@ -27,16 +27,47 @@ import software.amazon.awssdk.annotations.SdkPublicApi;
 @SdkPublicApi
 public final class RetryableException extends SdkException {
 
-    public RetryableException(String message) {
-        super(message);
-    }
-
-    public RetryableException(String message, Throwable t) {
-        super(message, t);
+    protected RetryableException(Builder b) {
+        super(b);
     }
 
     @Override
     public boolean retryable() {
         return true;
+    }
+
+    public static Builder builder() {
+        return new BuilderImpl();
+    }
+
+    public interface Builder extends SdkException.Builder {
+        @Override
+        Builder message(String message);
+
+        @Override
+        Builder throwable(Throwable t);
+
+        @Override
+        RetryableException build();
+    }
+
+    protected static final class BuilderImpl extends SdkException.BuilderImpl implements Builder {
+
+        @Override
+        public Builder message(String message) {
+            this.message = message;
+            return this;
+        }
+
+        @Override
+        public Builder throwable(Throwable throwable) {
+            this.throwable = throwable;
+            return this;
+        }
+
+        @Override
+        public RetryableException build() {
+            return new RetryableException(this);
+        }
     }
 }

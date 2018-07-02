@@ -27,12 +27,60 @@ import software.amazon.awssdk.annotations.SdkPublicApi;
 @SdkPublicApi
 public final class NonRetryableException extends SdkException {
 
-    public NonRetryableException(String message) {
-        super(message);
+    protected NonRetryableException(Builder b) {
+        super(b);
     }
 
     @Override
     public boolean retryable() {
         return false;
+    }
+
+    public static Builder builder() {
+        return new BuilderImpl();
+    }
+
+    public interface Builder extends SdkException.Builder {
+        @Override
+        Builder message(String message);
+
+        @Override
+        Builder throwable(Throwable t);
+
+        @Override
+        NonRetryableException build();
+    }
+
+    protected static final class BuilderImpl extends SdkException.BuilderImpl implements Builder {
+
+        private String message;
+        private Throwable t;
+
+        @Override
+        public Builder message(String message) {
+            this.message = message;
+            return this;
+        }
+
+        @Override
+        public String message() {
+            return message;
+        }
+
+        @Override
+        public Throwable throwable() {
+            return t;
+        }
+
+        @Override
+        public Builder throwable(Throwable t) {
+            this.t = t;
+            return this;
+        }
+
+        @Override
+        public NonRetryableException build() {
+            return new NonRetryableException(this);
+        }
     }
 }

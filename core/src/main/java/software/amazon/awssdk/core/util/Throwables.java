@@ -66,8 +66,8 @@ public final class Throwables {
             throw (Error) t;
         }
         return t instanceof InterruptedException
-               ? new AbortedException(t)
-               : new SdkClientException(t);
+               ? AbortedException.builder().throwable(t).build()
+               : SdkClientException.builder().throwable(t).build();
     }
 
     /**
@@ -83,7 +83,7 @@ public final class Throwables {
             throw (Error) t;
         }
         return t instanceof InterruptedException
-               ? new AbortedException(errmsg, t)
-               : new SdkClientException(errmsg, t);
+               ? AbortedException.builder().message(errmsg).throwable(t).build()
+               : SdkClientException.builder().message(errmsg).throwable(t).build();
     }
 }

@@ -26,19 +26,42 @@ import software.amazon.awssdk.annotations.SdkPublicApi;
 @SdkPublicApi
 public final class AbortedException extends SdkClientException {
 
-    public AbortedException() {
-        this("Aborted.");
+    protected AbortedException(Builder b) {
+        super(b);
     }
 
-    public AbortedException(String message) {
-        super(message);
+    public static Builder builder() {
+        return new BuilderImpl();
     }
 
-    public AbortedException(Throwable cause) {
-        super("Aborted.", cause);
+    public interface Builder extends SdkClientException.Builder {
+        @Override
+        Builder message(String message);
+
+        @Override
+        Builder throwable(Throwable t);
+
+        @Override
+        AbortedException build();
     }
 
-    public AbortedException(String message, Throwable cause) {
-        super(message, cause);
+    protected static final class BuilderImpl extends SdkClientException.BuilderImpl implements Builder {
+
+        @Override
+        public Builder message(String message) {
+            this.message = message;
+            return this;
+        }
+
+        @Override
+        public Builder throwable(Throwable throwable) {
+            this.throwable = throwable;
+            return this;
+        }
+
+        @Override
+        public AbortedException build() {
+            return new AbortedException(this);
+        }
     }
 }

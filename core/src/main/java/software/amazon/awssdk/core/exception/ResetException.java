@@ -27,7 +27,42 @@ import software.amazon.awssdk.annotations.SdkPublicApi;
 @SdkPublicApi
 public final class ResetException extends SdkClientException {
 
-    public ResetException(String message, Throwable t) {
-        super(message, t);
+    protected ResetException(Builder b) {
+        super(b);
+    }
+
+    public static Builder builder() {
+        return new BuilderImpl();
+    }
+
+    public interface Builder extends SdkClientException.Builder {
+        @Override
+        Builder message(String message);
+
+        @Override
+        Builder throwable(Throwable t);
+
+        @Override
+        ResetException build();
+    }
+
+    protected static final class BuilderImpl extends SdkClientException.BuilderImpl implements Builder {
+
+        @Override
+        public Builder message(String message) {
+            this.message = message;
+            return this;
+        }
+
+        @Override
+        public Builder throwable(Throwable throwable) {
+            this.throwable = throwable;
+            return this;
+        }
+
+        @Override
+        public ResetException build() {
+            return new ResetException(this);
+        }
     }
 }

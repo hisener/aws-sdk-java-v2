@@ -28,6 +28,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import software.amazon.awssdk.awscore.exception.AwsServiceException;
 import software.amazon.awssdk.core.exception.SdkServiceException;
 import software.amazon.awssdk.services.firehose.model.CreateDeliveryStreamRequest;
 import software.amazon.awssdk.services.firehose.model.ListDeliveryStreamsRequest;
@@ -124,9 +125,9 @@ public class ServiceIntegrationTest extends AwsTestBase {
         try {
             firehose.createDeliveryStream(CreateDeliveryStreamRequest.builder().build());
             fail("ValidationException is expected.");
-        } catch (SdkServiceException exception) {
-            assertEquals("ValidationException", exception.errorCode());
-            assertNotEmpty(exception.errorMessage());
+        } catch (AwsServiceException exception) {
+            assertEquals("ValidationException", exception.awsErrorDetails().errorCode());
+            assertNotEmpty(exception.awsErrorDetails().errorMessage());
         }
     }
 
