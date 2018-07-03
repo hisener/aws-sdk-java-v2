@@ -616,7 +616,7 @@ public final class InternalUtils {
         final AwsRequestOverrideConfiguration newCfg = request.overrideConfiguration()
                                                               .map(AwsRequestOverrideConfiguration::toBuilder)
                                                               .orElse(AwsRequestOverrideConfiguration.builder())
-                                                              .addApiName(apiName -> apiName.name("dynamodb-table-api").version(VersionInfo.SDK_VERSION))
+                                                              .apiName(apiName -> apiName.name("dynamodb-table-api").version(VersionInfo.SDK_VERSION))
                                                               .build();
 
         return (X) request.toBuilder()

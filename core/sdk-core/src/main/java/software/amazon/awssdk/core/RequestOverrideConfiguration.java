@@ -20,11 +20,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 import software.amazon.awssdk.annotations.Immutable;
 import software.amazon.awssdk.annotations.SdkPublicApi;
+import software.amazon.awssdk.utils.CollectionUtils;
 
 /**
  * Base per-request override configuration for all SDK requests.
@@ -40,9 +40,9 @@ public abstract class RequestOverrideConfiguration {
     private final List<ApiName> apiNames;
 
     protected RequestOverrideConfiguration(Builder<?> builder) {
-        this.headers = builder.headers();
-        this.rawQueryParameters = builder.rawQueryParameters();
-        this.apiNames = builder.apiNames();
+        this.headers = CollectionUtils.deepUnmodifiableMap(builder.headers(), () -> new TreeMap<>(String.CASE_INSENSITIVE_ORDER));
+        this.rawQueryParameters = CollectionUtils.deepUnmodifiableMap(builder.rawQueryParameters());
+        this.apiNames = Collections.unmodifiableList(builder.apiNames());
     }
 
     /**
@@ -50,8 +50,8 @@ public abstract class RequestOverrideConfiguration {
      *
      * @return The optional additional headers.
      */
-    public Optional<Map<String, List<String>>> headers() {
-        return Optional.ofNullable(headers);
+    public Map<String, List<String>> headers() {
+        return headers;
     }
 
     /**
@@ -59,8 +59,8 @@ public abstract class RequestOverrideConfiguration {
      *
      * @return The optional additional query parameters.
      */
-    public Optional<Map<String, List<String>>> rawQueryParameters() {
-        return Optional.ofNullable(rawQueryParameters);
+    public Map<String, List<String>> rawQueryParameters() {
+        return rawQueryParameters;
     }
 
     /**
@@ -68,8 +68,8 @@ public abstract class RequestOverrideConfiguration {
      *
      * @return The names of the libraries.
      */
-    public Optional<List<ApiName>> apiNames() {
-        return Optional.ofNullable(apiNames);
+    public List<ApiName> apiNames() {
+        return apiNames;
     }
 
     /**
@@ -88,11 +88,13 @@ public abstract class RequestOverrideConfiguration {
         Map<String, List<String>> headers();
 
         /**
-         * Add an additional header to be set on the HTTP request.
+         * Add a single header to be set on the HTTP request.
+         *
+         * <p>
+         * This overrides any values already configured with this header name in the builder.
          *
          * @param name The name of the header.
          * @param value The value of the header.
-         *
          * @return This object for method chaining.
          */
         default B header(String name, String value) {
@@ -101,11 +103,13 @@ public abstract class RequestOverrideConfiguration {
         }
 
         /**
-         * Add additional headers to be set on the HTTP request.
+         * Add a single header with multiple values to be set on the HTTP request.
+         *
+         * <p>
+         * This overrides any values already configured with this header name in the builder.
          *
          * @param name The name of the header.
          * @param values The values of the header.
-         *
          * @return This object for method chaining.
          */
         B header(String name, List<String> values);
@@ -113,8 +117,10 @@ public abstract class RequestOverrideConfiguration {
         /**
          * Add additional headers to be set on the HTTP request.
          *
-         * @param headers The set of additional headers.
+         * <p>
+         * This completely overrides any values currently configured in the builder.
          *
+         * @param headers The set of additional headers.
          * @return This object for method chaining.
          */
         B headers(Map<String, List<String>> headers);
@@ -127,11 +133,13 @@ public abstract class RequestOverrideConfiguration {
         Map<String, List<String>> rawQueryParameters();
 
         /**
-         * Add an additional query parameter to be set on the HTTP request.
+         * Add a single query parameter to be set on the HTTP request.
+         *
+         * <p>
+         * This overrides any values already configured with this query name in the builder.
          *
          * @param name The query parameter name.
          * @param value The query parameter value.
-         *
          * @return This object for method chaining.
          */
         default B rawQueryParameter(String name, String value) {
@@ -140,20 +148,24 @@ public abstract class RequestOverrideConfiguration {
         }
 
         /**
-         * Add an additional query parameter to be set on the HTTP request.
+         * Add a single query parameter with multiple values to be set on the HTTP request.
+         *
+         * <p>
+         * This overrides any values already configured with this query name in the builder.
          *
          * @param name The query parameter name.
          * @param values The query parameter values.
-         *
          * @return This object for method chaining.
          */
         B rawQueryParameter(String name, List<String> values);
 
         /**
-         * Add additional query parameters to be set on the HTTP request.
+         * Configure query parameters to be set on the HTTP request.
+         *
+         * <p>
+         * This completely overrides any query parameters currently configured in the builder.
          *
          * @param rawQueryParameters The set of additional query parameters.
-         *
          * @return This object for method chaining.
          */
         B rawQueryParameters(Map<String, List<String>> rawQueryParameters);
@@ -172,7 +184,7 @@ public abstract class RequestOverrideConfiguration {
          *
          * @return This object for method chaining.
          */
-        B addApiName(ApiName apiName);
+        B apiName(ApiName apiName);
 
         /**
          * Set the optional name of the higher level library that constructed the request.
@@ -181,7 +193,7 @@ public abstract class RequestOverrideConfiguration {
          *
          * @return This object for method chaining.
          */
-        B addApiName(Consumer<ApiName.Builder> apiNameConsumer);
+        B apiName(Consumer<ApiName.Builder> apiNameConsumer);
 
         /**
          * Create a new {@code SdkRequestOverrideConfiguration} with the properties set on this builder.
@@ -192,19 +204,19 @@ public abstract class RequestOverrideConfiguration {
     }
 
     protected abstract static class BuilderImpl<B extends Builder> implements Builder<B> {
-        private Map<String, List<String>> headers;
+        private Map<String, List<String>> headers = new HashMap<>();
 
-        private Map<String, List<String>> rawQueryParameters;
+        private Map<String, List<String>> rawQueryParameters = new HashMap<>();
 
-        private List<ApiName> apiNames;
+        private List<ApiName> apiNames = new ArrayList<>();
 
         protected BuilderImpl() {
         }
 
         protected BuilderImpl(RequestOverrideConfiguration sdkRequestOverrideConfig) {
-            sdkRequestOverrideConfig.headers().ifPresent(this::headers);
-            sdkRequestOverrideConfig.rawQueryParameters().ifPresent(this::rawQueryParameters);
-            sdkRequestOverrideConfig.apiNames().ifPresent(apiNames -> apiNames.forEach(this::addApiName));
+            this.headers = sdkRequestOverrideConfig.headers;
+            this.rawQueryParameters = sdkRequestOverrideConfig.rawQueryParameters;
+            this.apiNames = sdkRequestOverrideConfig.apiNames;
         }
 
         @Override
@@ -214,9 +226,6 @@ public abstract class RequestOverrideConfiguration {
 
         @Override
         public B header(String name, List<String> values) {
-            if (headers == null) {
-                headers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-            }
             headers.put(name, new ArrayList<>(values));
             return (B) this;
         }
@@ -224,11 +233,7 @@ public abstract class RequestOverrideConfiguration {
         @Override
         @SuppressWarnings("unchecked")
         public B headers(Map<String, List<String>> headers) {
-            if (headers == null) {
-                this.headers = null;
-            } else {
-                headers.forEach(this::header);
-            }
+            this.headers = headers;
             return (B) this;
         }
 
@@ -239,9 +244,6 @@ public abstract class RequestOverrideConfiguration {
 
         @Override
         public B rawQueryParameter(String name, List<String> values) {
-            if (rawQueryParameters == null) {
-                rawQueryParameters = new HashMap<>();
-            }
             rawQueryParameters.put(name, new ArrayList<>(values));
             return (B) this;
         }
@@ -249,11 +251,7 @@ public abstract class RequestOverrideConfiguration {
         @Override
         @SuppressWarnings("unchecked")
         public B rawQueryParameters(Map<String, List<String>> rawQueryParameters) {
-            if (rawQueryParameters == null) {
-                this.rawQueryParameters = null;
-            } else {
-                rawQueryParameters.forEach(this::rawQueryParameter);
-            }
+            this.rawQueryParameters = rawQueryParameters;
             return (B) this;
         }
 
@@ -264,20 +262,17 @@ public abstract class RequestOverrideConfiguration {
 
         @Override
         @SuppressWarnings("unchecked")
-        public B addApiName(ApiName apiName) {
-            if (apiNames == null) {
-                this.apiNames = new ArrayList<>();
-            }
+        public B apiName(ApiName apiName) {
             this.apiNames.add(apiName);
             return (B) this;
         }
 
         @Override
         @SuppressWarnings("unchecked")
-        public B addApiName(Consumer<ApiName.Builder> apiNameConsumer) {
+        public B apiName(Consumer<ApiName.Builder> apiNameConsumer) {
             ApiName.Builder b = ApiName.builder();
             apiNameConsumer.accept(b);
-            addApiName(b.build());
+            apiName(b.build());
             return (B) this;
         }
     }

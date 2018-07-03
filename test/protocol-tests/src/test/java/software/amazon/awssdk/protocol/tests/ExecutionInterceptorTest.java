@@ -470,7 +470,7 @@ public class ExecutionInterceptorTest {
                       .endpointOverride(URI.create("http://localhost:" + wireMock.port()))
                       .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create("akid", "skid")))
                       .overrideConfiguration(ClientOverrideConfiguration.builder()
-                                                                        .addExecutionInterceptor(interceptor)
+                                                                        .executionInterceptor(interceptor)
                                                                         .build())
                       .build();
     }

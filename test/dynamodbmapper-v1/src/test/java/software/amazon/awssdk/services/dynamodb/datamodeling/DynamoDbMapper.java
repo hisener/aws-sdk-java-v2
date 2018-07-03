@@ -775,7 +775,7 @@ public class DynamoDbMapper extends AbstractDynamoDbMapper {
         final AwsRequestOverrideConfiguration newCfg = request.overrideConfiguration()
                                                               .map(c -> c.toBuilder())
                                                               .orElse(AwsRequestOverrideConfiguration.builder())
-                                                              .addApiName(apiName -> apiName.name(USER_AGENT_NAME).version(VersionInfo.SDK_VERSION))
+                                                              .apiName(apiName -> apiName.name(USER_AGENT_NAME).version(VersionInfo.SDK_VERSION))
                                                               .build();
 
         return (X) request.toBuilder()
@@ -787,7 +787,7 @@ public class DynamoDbMapper extends AbstractDynamoDbMapper {
         final AwsRequestOverrideConfiguration newCfg = request.overrideConfiguration()
                                                               .map(c -> c.toBuilder())
                                                               .orElse(AwsRequestOverrideConfiguration.builder())
-                                                              .addApiName(apiName -> apiName.name(USER_AGENT_BATCH_OPERATION_NAME).version(VersionInfo.SDK_VERSION))
+                                                              .apiName(apiName -> apiName.name(USER_AGENT_BATCH_OPERATION_NAME).version(VersionInfo.SDK_VERSION))
                                                               .build();
 
         return (X) request.toBuilder()

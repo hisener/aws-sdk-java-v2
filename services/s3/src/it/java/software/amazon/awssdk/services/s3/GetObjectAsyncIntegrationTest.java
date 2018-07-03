@@ -130,7 +130,7 @@ public class GetObjectAsyncIntegrationTest extends S3IntegrationTestBase {
     private S3AsyncClient createClientWithInterceptor(ExecutionInterceptor assertingInterceptor) {
         return s3AsyncClientBuilder()
                 .overrideConfiguration(ClientOverrideConfiguration.builder()
-                                                                  .addExecutionInterceptor(assertingInterceptor)
+                                                                  .executionInterceptor(assertingInterceptor)
                                                                   .build())
                 .build();
     }

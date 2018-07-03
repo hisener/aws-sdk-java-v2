@@ -22,7 +22,7 @@ import software.amazon.awssdk.annotations.SdkPublicApi;
 /**
  * Encapsulates the API name and version of a library built using the AWS SDK.
  *
- * See {@link RequestOverrideConfiguration.Builder#addApiName(ApiName)}.
+ * See {@link RequestOverrideConfiguration.Builder#apiName(ApiName)}.
  */
 @SdkPublicApi
 public final class ApiName {
