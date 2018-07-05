@@ -214,9 +214,9 @@ public abstract class RequestOverrideConfiguration {
         }
 
         protected BuilderImpl(RequestOverrideConfiguration sdkRequestOverrideConfig) {
-            this.headers = sdkRequestOverrideConfig.headers;
-            this.rawQueryParameters = sdkRequestOverrideConfig.rawQueryParameters;
-            this.apiNames = sdkRequestOverrideConfig.apiNames;
+            this.headers = new HashMap<>(sdkRequestOverrideConfig.headers);
+            this.rawQueryParameters = new HashMap<>(sdkRequestOverrideConfig.rawQueryParameters);
+            this.apiNames = new ArrayList<>(sdkRequestOverrideConfig.apiNames);
         }
 
         @Override
