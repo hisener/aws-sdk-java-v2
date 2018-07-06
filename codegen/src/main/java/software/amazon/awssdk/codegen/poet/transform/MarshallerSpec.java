@@ -107,7 +107,7 @@ public class MarshallerSpec implements ClassSpec {
         methodSpecBuilder.endControlFlow();
         methodSpecBuilder.beginControlFlow("catch (Exception e)");
         methodSpecBuilder.addStatement("throw $T.builder().message(\"Unable to marshall request to JSON: \" + " +
-                "e.getMessage()).throwable(e).build()", ClassName
+                "e.getMessage()).cause(e).build()", ClassName
             .get(SdkClientException.class));
         methodSpecBuilder.endControlFlow();
         return methodSpecBuilder.build();

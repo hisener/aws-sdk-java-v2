@@ -72,7 +72,7 @@ public class AwsRetryPolicyTest {
     public void retriesOnIOException() {
         assertTrue(shouldRetry(b -> b.exception(SdkClientException.builder()
                                                                   .message("IO")
-                                                                  .throwable(new IOException())
+                                                                  .cause(new IOException())
                                                                   .build())));
     }
 

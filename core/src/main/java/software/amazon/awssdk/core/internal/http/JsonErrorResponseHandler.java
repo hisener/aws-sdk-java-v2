@@ -23,7 +23,6 @@ import software.amazon.awssdk.core.exception.SdkServiceException;
 import software.amazon.awssdk.core.http.HttpResponseHandler;
 import software.amazon.awssdk.core.internal.protocol.json.JsonContent;
 import software.amazon.awssdk.core.internal.protocol.json.JsonErrorUnmarshaller;
-import software.amazon.awssdk.http.HttpStatusFamily;
 
 /**
  * Base error response handler for JSON protocol.

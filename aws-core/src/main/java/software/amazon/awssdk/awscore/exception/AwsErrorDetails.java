@@ -16,9 +16,9 @@
 package software.amazon.awssdk.awscore.exception;
 
 import java.io.Serializable;
-import java.util.Map;
 
 import software.amazon.awssdk.annotations.SdkPublicApi;
+import software.amazon.awssdk.core.http.HttpResponse;
 
 @SdkPublicApi
 public class AwsErrorDetails implements Serializable {
@@ -31,7 +31,7 @@ public class AwsErrorDetails implements Serializable {
 
     private final String serviceName;
 
-    private final Map<String, String> headers;
+    private final HttpResponse sdkHttpResponse;
 
     private final byte[] rawResponse;
 
@@ -39,12 +39,13 @@ public class AwsErrorDetails implements Serializable {
         this.errorMessage = b.errorMessage();
         this.errorCode = b.errorCode();
         this.serviceName = b.serviceName();
-        this.headers = b.headers();
+        this.sdkHttpResponse = b.sdkHttpResponse();
         this.rawResponse = b.rawResponse();
     }
 
     /**
-     * Returns the name of the service that sent this error response.
+     * Returns the name of the service as defined in the static constant
+     * SERVICE_NAME of each service's interface.
      *
      * @return The name of the service that sent this error response.
      */
@@ -76,12 +77,12 @@ public class AwsErrorDetails implements Serializable {
     /**
      * Returns a map of HTTP headers associated with the error response.
      */
-    public Map<String, String> headers() {
-        return headers;
+    public HttpResponse sdkHttpResponse() {
+        return sdkHttpResponse;
     }
 
     /**
-     * @return {@link SdkException.Builder} instance to construct a new {@link AwsErrorDetails}.
+     * @return {@link AwsErrorDetails.Builder} instance to construct a new {@link AwsErrorDetails}.
      */
     public static Builder builder() {
         return new BuilderImpl();
@@ -147,19 +148,19 @@ public class AwsErrorDetails implements Serializable {
         String serviceName();
 
         /**
-         * Specifies the headers returned on the error response from the service.
+         * Specifies the {@link HttpResponse} returned on the error response from the service.
          *
-         * @param headers A map of headers from the response.
+         * @param HttpResponse The HTTP response from the service.
          * @return This object for method chaining.
          */
-        Builder headers(Map<String, String> headers);
+        Builder sdkHttpResponse(HttpResponse sdkHttpResponse);
 
         /**
-         * The headers returned on the response from the service.
+         * The HTTP response returned from the service.
          *
-         * @return A map of headers from the response.
+         * @return {@link HttpResponse}.
          */
-        Map<String, String> headers();
+        HttpResponse sdkHttpResponse();
 
         /**
          * Specifies raw http response from the service.
@@ -189,7 +190,7 @@ public class AwsErrorDetails implements Serializable {
         private String errorMessage;
         private String errorCode;
         private String serviceName;
-        private Map<String, String> headers;
+        private HttpResponse sdkHttpResponse;
         private byte[] rawResponse;
 
         private BuilderImpl() {}
@@ -198,7 +199,7 @@ public class AwsErrorDetails implements Serializable {
             this.errorMessage = awsErrorDetails.errorMessage();
             this.errorCode = awsErrorDetails.errorCode();
             this.serviceName = awsErrorDetails.serviceName();
-            this.headers = awsErrorDetails.headers();
+            this.sdkHttpResponse = awsErrorDetails.sdkHttpResponse();
             this.rawResponse = awsErrorDetails.rawResponse();
         }
 
@@ -236,14 +237,14 @@ public class AwsErrorDetails implements Serializable {
         }
 
         @Override
-        public Builder headers(Map<String, String> headers) {
-            this.headers = headers;
+        public Builder sdkHttpResponse(HttpResponse sdkHttpResponse) {
+            this.sdkHttpResponse = sdkHttpResponse;
             return this;
         }
 
         @Override
-        public Map<String, String> headers() {
-            return headers;
+        public HttpResponse sdkHttpResponse() {
+            return sdkHttpResponse;
         }
 
         @Override

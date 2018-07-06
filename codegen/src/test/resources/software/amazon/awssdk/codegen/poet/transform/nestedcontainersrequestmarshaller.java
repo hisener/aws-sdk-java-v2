@@ -37,7 +37,7 @@ public class NestedContainersRequestMarshaller implements Marshaller<Request<Nes
             NestedContainersRequestModelMarshaller.getInstance().marshall(nestedContainersRequest, protocolMarshaller);
             return protocolMarshaller.finishMarshalling();
         } catch (Exception e) {
-            throw SdkClientException.builder().message("Unable to marshall request to JSON: " + e.getMessage()).throwable(e)
+            throw SdkClientException.builder().message("Unable to marshall request to JSON: " + e.getMessage()).cause(e)
                     .build();
         }
     }

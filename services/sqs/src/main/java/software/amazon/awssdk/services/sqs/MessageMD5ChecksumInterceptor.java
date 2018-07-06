@@ -209,7 +209,7 @@ public class MessageMD5ChecksumInterceptor implements ExecutionInterceptor {
         } catch (Exception e) {
             throw SdkClientException.builder()
                                     .message("Unable to calculate the MD5 hash of the message body. " + e.getMessage())
-                                    .throwable(e)
+                                    .cause(e)
                                     .build();
         }
         String expectedMd5Hex = BinaryUtils.toHex(expectedMd5);
@@ -266,7 +266,7 @@ public class MessageMD5ChecksumInterceptor implements ExecutionInterceptor {
         } catch (Exception e) {
             throw SdkClientException.builder()
                                     .message("Unable to calculate the MD5 hash of the message attributes. " + e.getMessage())
-                                    .throwable(e)
+                                    .cause(e)
                                     .build();
         }
 

@@ -35,7 +35,7 @@ public class ClientExecutionTimeoutException extends SdkClientException {
         Builder message(String message);
 
         @Override
-        Builder throwable(Throwable t);
+        Builder cause(Throwable t);
 
         @Override
         ClientExecutionTimeoutException build();
@@ -50,7 +50,7 @@ public class ClientExecutionTimeoutException extends SdkClientException {
         }
 
         @Override
-        public Builder throwable(Throwable throwable) {
+        public Builder cause(Throwable throwable) {
             this.throwable = throwable;
             return this;
         }

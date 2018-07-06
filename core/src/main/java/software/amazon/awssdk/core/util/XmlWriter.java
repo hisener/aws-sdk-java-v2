@@ -171,7 +171,7 @@ public class XmlWriter {
         try {
             writer.append(s);
         } catch (IOException e) {
-            throw SdkClientException.builder().message("Unable to write XML document").throwable(e).build();
+            throw SdkClientException.builder().message("Unable to write XML document").cause(e).build();
         }
     }
 

@@ -106,12 +106,12 @@ public abstract class HttpCredentialsProvider implements AwsCredentialsProvider,
         } catch (JsonMappingException e) {
             throw SdkClientException.builder()
                                     .message("Unable to parse response returned from service endpoint.")
-                                    .throwable(e)
+                                    .cause(e)
                                     .build();
         } catch (RuntimeException | IOException e) {
             throw SdkClientException.builder()
                                     .message("Unable to load credentials from service endpoint.")
-                                    .throwable(e)
+                                    .cause(e)
                                     .build();
         }
     }

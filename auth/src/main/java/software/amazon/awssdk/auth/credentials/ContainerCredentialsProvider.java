@@ -107,7 +107,7 @@ public final class ContainerCredentialsProvider extends HttpCredentialsProvider 
             } catch (Exception e) {
                 throw SdkClientException.builder()
                                         .message("Unable to fetch credentials from container.")
-                                        .throwable(e)
+                                        .cause(e)
                                         .build();
             }
         }

@@ -53,7 +53,7 @@ public class PredictEndpointInterceptor implements ExecutionInterceptor {
             } catch (URISyntaxException e) {
                 throw SdkClientException.builder()
                                         .message("Unable to parse PredictRequest.PredictEndpoint")
-                                        .throwable(e)
+                                        .cause(e)
                                         .build();
             }
         }

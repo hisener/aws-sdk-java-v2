@@ -45,7 +45,7 @@ public final class NonRetryableException extends SdkException {
         Builder message(String message);
 
         @Override
-        Builder throwable(Throwable t);
+        Builder cause(Throwable t);
 
         @Override
         NonRetryableException build();
@@ -68,12 +68,12 @@ public final class NonRetryableException extends SdkException {
         }
 
         @Override
-        public Throwable throwable() {
+        public Throwable cause() {
             return t;
         }
 
         @Override
-        public Builder throwable(Throwable t) {
+        public Builder cause(Throwable t) {
             this.t = t;
             return this;
         }

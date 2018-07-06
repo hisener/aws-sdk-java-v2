@@ -36,7 +36,7 @@ public class GlobalServiceExecutionInterceptor implements ExecutionInterceptor {
             throw SdkClientException.builder()
                                     .message("This is a global service. Consider setting AWS_GLOBAL or another global " +
                                          "region when creating your client.")
-                                    .throwable(context.exception())
+                                    .cause(context.exception())
                                     .build();
         }
     }

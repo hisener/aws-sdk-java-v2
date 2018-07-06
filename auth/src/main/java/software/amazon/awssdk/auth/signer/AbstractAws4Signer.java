@@ -158,7 +158,7 @@ public abstract class AbstractAws4Signer<T extends Aws4SignerParams, U extends A
         } catch (IOException e) {
             throw SdkClientException.builder()
                                     .message("Unable to reset stream after calculating AWS4 signature")
-                                    .throwable(e)
+                                    .cause(e)
                                     .build();
         }
         return contentSha256;

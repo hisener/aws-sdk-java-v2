@@ -44,7 +44,7 @@ public class DynamoDBTestBase extends AwsTestBase {
         try {
             setUpCredentials();
         } catch (Exception e) {
-            throw SdkClientException.builder().message("Unable to load credential property file.").throwable(e).build();
+            throw SdkClientException.builder().message("Unable to load credential property file.").cause(e).build();
         }
 
         dynamo = DynamoDbClient.builder().region(Region.US_EAST_1).credentialsProvider(CREDENTIALS_PROVIDER_CHAIN).build();

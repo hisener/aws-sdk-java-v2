@@ -35,6 +35,22 @@ public class SdkClientException extends SdkException {
         super(b);
     }
 
+    public static SdkClientException create(String message, Throwable cause) {
+        return SdkClientException.builder().message(message).cause(cause).build();
+    }
+
+    /**
+     * Create a {@link Builder} initialized with the properties of this {@code SdkClientException}.
+     *
+     * @return A new builder initialized with this config's properties.
+     */
+    public Builder toBuilder() {
+        return new BuilderImpl(this);
+    }
+
+    /**
+     * @return {@link Builder} instance to construct a new {@link SdkClientException}.
+     */
     public static Builder builder() {
         return new BuilderImpl();
     }
@@ -45,13 +61,19 @@ public class SdkClientException extends SdkException {
         Builder message(String message);
 
         @Override
-        Builder throwable(Throwable t);
+        Builder cause(Throwable t);
 
         @Override
         SdkClientException build();
     }
 
     protected static class BuilderImpl extends SdkException.BuilderImpl implements Builder {
+
+        protected BuilderImpl() {}
+
+        protected BuilderImpl(SdkClientException ex) {
+            super(ex);
+        }
 
         @Override
         public Builder message(String message) {
@@ -60,7 +82,7 @@ public class SdkClientException extends SdkException {
         }
 
         @Override
-        public Builder throwable(Throwable throwable) {
+        public Builder cause(Throwable throwable) {
             this.throwable = throwable;
             return this;
         }

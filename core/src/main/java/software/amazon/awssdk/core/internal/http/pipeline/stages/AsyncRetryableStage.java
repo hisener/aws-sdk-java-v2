@@ -83,7 +83,7 @@ public final class AsyncRetryableStage<OutputT> implements RequestPipeline<SdkHt
             } catch (IOException ex) {
                 throw ResetException.builder()
                                     .message("Failed to reset the request input stream")
-                                    .throwable(ex)
+                                    .cause(ex)
                                     .build();
             }
         }
@@ -128,7 +128,7 @@ public final class AsyncRetryableStage<OutputT> implements RequestPipeline<SdkHt
                     retryHandler.setLastRetriedException(handleSdkException(resp));
                     executeRetry(future);
                 } else {
-                    SdkClientException exception = SdkClientException.builder().throwable(err).build();
+                    SdkClientException exception = SdkClientException.builder().cause(err).build();
                     retryHandler.setLastRetriedException(handleSdkException(Response.fromFailure(exception, null)));
                     executeRetry(future);
                 }

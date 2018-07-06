@@ -101,7 +101,7 @@ public class SdkServiceException extends SdkException {
     public interface Builder extends SdkException.Builder {
         Builder message(String message);
 
-        Builder throwable(Throwable t);
+        Builder cause(Throwable t);
 
         /**
          * Specifies the requestId returned by the called service.
@@ -161,7 +161,7 @@ public class SdkServiceException extends SdkException {
         }
 
         @Override
-        public Builder throwable(Throwable throwable) {
+        public Builder cause(Throwable throwable) {
             this.throwable = throwable;
             return this;
         }

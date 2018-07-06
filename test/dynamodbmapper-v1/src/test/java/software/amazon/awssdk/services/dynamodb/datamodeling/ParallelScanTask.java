@@ -118,7 +118,7 @@ public class ParallelScanTask {
                 } catch (InterruptedException ie) {
                     throw SdkClientException.builder()
                                             .message("Parallel scan interrupted by other thread.")
-                                            .throwable(ie)
+                                            .cause(ie)
                                             .build();
                 }
             }
@@ -206,7 +206,7 @@ public class ParallelScanTask {
                 } catch (Exception e) {
                     throw SdkClientException.builder()
                                             .message("Error during the scan on segment #" + segment + ".")
-                                            .throwable(e)
+                                            .cause(e)
                                             .build();
                 }
             } else if (currentSegmentState == SegmentScanstate.HasNextPage ||

@@ -55,16 +55,16 @@ public class AwsServiceException extends SdkServiceException {
 
     @Override
     public boolean isClockSkewException() {
-        return Optional.ofNullable(awsErrorDetails.errorCode())
-                .map(AwsErrorCode.CLOCK_SKEW_ERROR_CODES::contains)
+        return Optional.ofNullable(awsErrorDetails)
+                .map(a -> AwsErrorCode.CLOCK_SKEW_ERROR_CODES.contains(a.errorCode()))
                 .orElse(false);
     }
 
     @Override
     public boolean isThrottlingException() {
         return super.isThrottlingException() ||
-                Optional.ofNullable(awsErrorDetails.errorCode())
-                        .map(AwsErrorCode.THROTTLING_ERROR_CODES::contains)
+                Optional.ofNullable(awsErrorDetails)
+                        .map(a -> AwsErrorCode.THROTTLING_ERROR_CODES.contains(a.errorCode()))
                         .orElse(false);
     }
 
@@ -109,7 +109,7 @@ public class AwsServiceException extends SdkServiceException {
         Builder message(String message);
 
         @Override
-        Builder throwable(Throwable t);
+        Builder cause(Throwable t);
 
         @Override
         Builder requestId(String requestId);
@@ -159,7 +159,7 @@ public class AwsServiceException extends SdkServiceException {
         }
 
         @Override
-        public Builder throwable(Throwable throwable) {
+        public Builder cause(Throwable throwable) {
             this.throwable = throwable;
             return this;
         }

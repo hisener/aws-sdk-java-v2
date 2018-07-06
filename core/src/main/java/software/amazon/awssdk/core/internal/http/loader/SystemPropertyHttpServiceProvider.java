@@ -58,7 +58,7 @@ final class SystemPropertyHttpServiceProvider<T> implements SdkHttpServiceProvid
                                              + "%s system property. Ensure the class '%s' is present on the classpath" +
                                              "and has a no-arg constructor",
                                              SdkSystemSetting.SYNC_HTTP_SERVICE_IMPL.property(), httpImplFqcn))
-                                    .throwable(e)
+                                    .cause(e)
                                     .build();
         }
     }

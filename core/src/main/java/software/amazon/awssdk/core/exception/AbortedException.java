@@ -39,7 +39,7 @@ public final class AbortedException extends SdkClientException {
         Builder message(String message);
 
         @Override
-        Builder throwable(Throwable t);
+        Builder cause(Throwable t);
 
         @Override
         AbortedException build();
@@ -54,7 +54,7 @@ public final class AbortedException extends SdkClientException {
         }
 
         @Override
-        public Builder throwable(Throwable throwable) {
+        public Builder cause(Throwable throwable) {
             this.throwable = throwable;
             return this;
         }

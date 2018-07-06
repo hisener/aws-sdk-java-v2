@@ -83,7 +83,7 @@ public class DefaultErrorResponseHandler implements HttpResponseHandler<AwsServi
         AwsErrorDetails.Builder awsErrorDetails =
                 exceptionBuilder.awsErrorDetails()
                                 .toBuilder()
-                                .headers(errorResponse.getHeaders())
+                                .sdkHttpResponse(errorResponse)
                                 .serviceName(executionAttributes.getAttribute(SdkExecutionAttribute.SERVICE_NAME));
 
         if (awsErrorDetails.errorCode() == null) {

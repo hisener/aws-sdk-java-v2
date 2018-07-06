@@ -105,7 +105,7 @@ public final class RegionMetadataLoader {
         } catch (IOException | RuntimeException e) {
             throw SdkClientException.builder()
                                     .message("Error while loading partitions file from " + location)
-                                    .throwable(e)
+                                    .cause(e)
                                     .build();
         } finally {
             IoUtils.closeQuietly(stream, null);

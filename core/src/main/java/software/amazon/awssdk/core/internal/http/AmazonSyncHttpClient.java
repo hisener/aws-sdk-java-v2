@@ -284,7 +284,7 @@ public class AmazonSyncHttpClient implements SdkAutoCloseable {
             } catch (RuntimeException e) {
                 throw e;
             } catch (Exception e) {
-                throw SdkClientException.builder().throwable(e).build();
+                throw SdkClientException.builder().cause(e).build();
             }
         }
 

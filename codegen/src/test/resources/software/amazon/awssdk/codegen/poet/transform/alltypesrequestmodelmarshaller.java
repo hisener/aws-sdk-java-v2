@@ -153,7 +153,7 @@ public class AllTypesRequestModelMarshaller {
             protocolMarshaller.marshall(allTypesRequest.polymorphicTypeWithoutSubTypes(), POLYMORPHICTYPEWITHOUTSUBTYPES_BINDING);
             protocolMarshaller.marshall(allTypesRequest.enumTypeAsString(), ENUMTYPE_BINDING);
         } catch (Exception e) {
-            throw SdkClientException.builder().message("Unable to marshall request to JSON: " + e.getMessage()).throwable(e)
+            throw SdkClientException.builder().message("Unable to marshall request to JSON: " + e.getMessage()).cause(e)
                     .build();
         }
     }

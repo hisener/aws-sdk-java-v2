@@ -183,7 +183,7 @@ public final class AwsS3V4Signer extends AbstractAws4Signer<AwsS3V4SignerParams,
                     } catch (IOException e) {
                         throw SdkClientException.builder()
                                                 .message("Cannot get the content-length of the request content.")
-                                                .throwable(e)
+                                                .cause(e)
                                                 .build();
                     }
                 }
@@ -251,7 +251,7 @@ public final class AwsS3V4Signer extends AbstractAws4Signer<AwsS3V4SignerParams,
         try {
             content.reset();
         } catch (IOException ex) {
-            throw ResetException.builder().message("Failed to reset the input stream").throwable(ex).build();
+            throw ResetException.builder().message("Failed to reset the input stream").cause(ex).build();
         }
         return contentLength;
     }

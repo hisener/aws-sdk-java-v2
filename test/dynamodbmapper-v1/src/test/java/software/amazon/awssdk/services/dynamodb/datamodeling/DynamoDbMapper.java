@@ -806,7 +806,7 @@ public class DynamoDbMapper extends AbstractDynamoDbMapper {
             Thread.sleep(delay);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw SdkClientException.builder().message(e.getMessage()).throwable(e).build();
+            throw SdkClientException.builder().message(e.getMessage()).cause(e).build();
         }
     }
 

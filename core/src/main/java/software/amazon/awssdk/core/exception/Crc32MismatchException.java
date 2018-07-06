@@ -47,7 +47,7 @@ public final class Crc32MismatchException extends SdkClientException {
         Builder message(String message);
 
         @Override
-        Builder throwable(Throwable t);
+        Builder cause(Throwable t);
 
         @Override
         Crc32MismatchException build();
@@ -62,7 +62,7 @@ public final class Crc32MismatchException extends SdkClientException {
         }
 
         @Override
-        public Builder throwable(Throwable throwable) {
+        public Builder cause(Throwable throwable) {
             this.throwable = throwable;
             return this;
         }

@@ -64,7 +64,7 @@ public final class ClasspathInterceptorChainFactory {
         } catch (IOException e) {
             throw SdkClientException.builder()
                                     .message("Unable to instantiate execution interceptor chain.")
-                                    .throwable(e)
+                                    .cause(e)
                                     .build();
         }
     }
@@ -103,7 +103,7 @@ public final class ClasspathInterceptorChainFactory {
         } catch (IOException e) {
             throw SdkClientException.builder()
                                     .message("Unable to instantiate execution interceptor chain.")
-                                    .throwable(e)
+                                    .cause(e)
                                     .build();
         }
     }
@@ -131,7 +131,7 @@ public final class ClasspathInterceptorChainFactory {
         } catch (IllegalAccessException | ClassNotFoundException | InstantiationException e) {
             throw SdkClientException.builder()
                                     .message("Unable to instantiate executor interceptor for client.")
-                                    .throwable(e)
+                                    .cause(e)
                                     .build();
         }
     }

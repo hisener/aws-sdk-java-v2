@@ -49,7 +49,7 @@ public class NestedContainersRequestModelMarshaller {
             protocolMarshaller.marshall(nestedContainersRequest.mapOfStringToListOfListOfStrings(),
                     MAPOFSTRINGTOLISTOFLISTOFSTRINGS_BINDING);
         } catch (Exception e) {
-            throw SdkClientException.builder().message("Unable to marshall request to JSON: " + e.getMessage()).throwable(e)
+            throw SdkClientException.builder().message("Unable to marshall request to JSON: " + e.getMessage()).cause(e)
                     .build();
         }
     }

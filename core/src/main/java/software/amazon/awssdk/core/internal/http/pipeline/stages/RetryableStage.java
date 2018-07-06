@@ -81,7 +81,7 @@ public final class RetryableStage<OutputT> implements RequestToResponsePipeline<
             } catch (IOException ex) {
                 throw ResetException.builder()
                                     .message("Failed to reset the request input stream")
-                                    .throwable(ex)
+                                    .cause(ex)
                                     .build();
             }
         }
@@ -166,7 +166,7 @@ public final class RetryableStage<OutputT> implements RequestToResponsePipeline<
                     (SdkClientException) e : SdkClientException.builder()
                                                                .message("Unable to execute HTTP request: " +
                                                                         e.getMessage())
-                                                               .throwable(e)
+                                                               .cause(e)
                                                                .build();
             boolean willRetry = retryHandler.shouldRetry(null, request, context, sdkClientException, requestCount);
 

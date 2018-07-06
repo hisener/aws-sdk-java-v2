@@ -63,7 +63,7 @@ public abstract class AbstractAwsSigner implements Signer {
             } catch (NoSuchAlgorithmException e) {
                 throw SdkClientException.builder()
                                         .message("Unable to get SHA256 Function" + e.getMessage())
-                                        .throwable(e)
+                                        .cause(e)
                                         .build();
             }
         });
@@ -77,7 +77,7 @@ public abstract class AbstractAwsSigner implements Signer {
         } catch (Exception e) {
             throw SdkClientException.builder()
                                     .message("Unable to compute hash while signing request: " + e.getMessage())
-                                    .throwable(e)
+                                    .cause(e)
                                     .build();
         }
     }
@@ -112,7 +112,7 @@ public abstract class AbstractAwsSigner implements Signer {
         } catch (Exception e) {
             throw SdkClientException.builder()
                                     .message("Unable to calculate a request signature: " + e.getMessage())
-                                    .throwable(e)
+                                    .cause(e)
                                     .build();
         }
     }
@@ -123,7 +123,7 @@ public abstract class AbstractAwsSigner implements Signer {
         } catch (Exception e) {
             throw SdkClientException.builder()
                                     .message("Unable to calculate a request signature: " + e.getMessage())
-                                    .throwable(e)
+                                    .cause(e)
                                     .build();
         }
     }
@@ -136,7 +136,7 @@ public abstract class AbstractAwsSigner implements Signer {
         } catch (Exception e) {
             throw SdkClientException.builder()
                                     .message("Unable to calculate a request signature: " + e.getMessage())
-                                    .throwable(e)
+                                    .cause(e)
                                     .build();
         }
     }
@@ -149,7 +149,7 @@ public abstract class AbstractAwsSigner implements Signer {
         } catch (Exception e) {
             throw SdkClientException.builder()
                                     .message("Unable to calculate a request signature: " + e.getMessage())
-                                    .throwable(e)
+                                    .cause(e)
                                     .build();
         }
     }
@@ -180,7 +180,7 @@ public abstract class AbstractAwsSigner implements Signer {
         } catch (Exception e) {
             throw SdkClientException.builder()
                                     .message("Unable to compute hash while signing request: " + e.getMessage())
-                                    .throwable(e)
+                                    .cause(e)
                                     .build();
         }
     }
@@ -200,7 +200,7 @@ public abstract class AbstractAwsSigner implements Signer {
         } catch (Exception e) {
             throw SdkClientException.builder()
                                     .message("Unable to compute hash while signing request: " + e.getMessage())
-                                    .throwable(e)
+                                    .cause(e)
                                     .build();
         }
     }
@@ -267,7 +267,7 @@ public abstract class AbstractAwsSigner implements Signer {
         } catch (Exception e) {
             throw SdkClientException.builder()
                                     .message("Unable to read request payload to sign request: " + e.getMessage())
-                                    .throwable(e)
+                                    .cause(e)
                                     .build();
         }
     }

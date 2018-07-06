@@ -125,7 +125,7 @@ public final class DateUtils {
             return Instant.ofEpochMilli(dateValue.scaleByPowerOfTen(
                     AWS_DATE_MILLI_SECOND_PRECISION).longValue());
         } catch (NumberFormatException nfe) {
-            throw SdkClientException.builder().message("Unable to parse date : " + dateString).throwable(nfe).build();
+            throw SdkClientException.builder().message("Unable to parse date : " + dateString).cause(nfe).build();
         }
     }
 

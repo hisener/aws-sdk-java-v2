@@ -65,11 +65,11 @@ public class AwsJsonErrorResponseHandler extends JsonErrorResponseHandler<AwsSer
         AwsServiceException.Builder exception = createException(errorCode, jsonContent).toBuilder();
 
         AwsErrorDetails.Builder errorDetails = AwsErrorDetails.builder()
-                                                      .errorCode(errorCode)
-                                                      .serviceName(executionAttributes
-                                                              .getAttribute(SdkExecutionAttribute.SERVICE_NAME))
-                                                      .rawResponse(jsonContent.getRawContent())
-                                                      .headers(response.getHeaders());
+                                                              .errorCode(errorCode)
+                                                              .serviceName(executionAttributes
+                                                                               .getAttribute(SdkExecutionAttribute.SERVICE_NAME))
+                                                              .rawResponse(jsonContent.getRawContent())
+                                                              .sdkHttpResponse(response);
 
         if (exception.awsErrorDetails() == null || exception.awsErrorDetails().errorMessage() == null) {
             errorDetails.errorMessage(errorMessageParser.parseErrorMessage(response, jsonContent.getJsonNode()));

@@ -115,7 +115,7 @@ public class ClientExecutionTimedStage<OutputT> implements RequestToResponsePipe
             return ClientExecutionTimeoutException.builder().build();
         } else {
             Thread.currentThread().interrupt();
-            return AbortedException.builder().throwable(e).build();
+            return AbortedException.builder().cause(e).build();
         }
     }
 

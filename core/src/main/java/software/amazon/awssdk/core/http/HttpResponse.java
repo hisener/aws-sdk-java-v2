@@ -16,6 +16,7 @@
 package software.amazon.awssdk.core.http;
 
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import software.amazon.awssdk.annotations.ReviewBeforeRelease;
@@ -30,7 +31,9 @@ import software.amazon.awssdk.http.SdkHttpFullRequest;
  */
 @SdkProtectedApi
 @ReviewBeforeRelease("Make sure we aren't exposing this anywhere")
-public class HttpResponse implements Abortable {
+public class HttpResponse implements Abortable, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final SdkHttpFullRequest request;
     private final Abortable abortable;

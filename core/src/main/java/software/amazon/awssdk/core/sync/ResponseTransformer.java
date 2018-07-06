@@ -130,7 +130,7 @@ public interface ResponseTransformer<ResponseT, ReturnT> {
                 }
 
                 // Retry the request
-                throw RetryableException.builder().message(copyError).throwable(copyException).build();
+                throw RetryableException.builder().message(copyError).cause(copyException).build();
             }
         };
     }
@@ -174,7 +174,7 @@ public interface ResponseTransformer<ResponseT, ReturnT> {
             try {
                 return new ResponseBytes<>(response, IoUtils.toByteArray(inputStream));
             } catch (IOException e) {
-                throw RetryableException.builder().message("Failed to read response.").throwable(e).build();
+                throw RetryableException.builder().message("Failed to read response.").cause(e).build();
             }
         };
     }

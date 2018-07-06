@@ -29,7 +29,7 @@ public class SdkException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     protected SdkException(Builder builder) {
-        super(builder.message(), builder.throwable());
+        super(builder.message(), builder.cause());
     }
 
     /**
@@ -37,6 +37,10 @@ public class SdkException extends RuntimeException {
      */
     public boolean retryable() {
         return false;
+    }
+
+    public static SdkException create(String message, Throwable cause) {
+        return SdkException.builder().message(message).cause(cause).build();
     }
 
     /**
@@ -62,14 +66,14 @@ public class SdkException extends RuntimeException {
          * @param t The exception that caused this exception to occur.
          * @return This object for method chaining.
          */
-        Builder throwable(Throwable t);
+        Builder cause(Throwable t);
 
         /**
          * The exception that caused this exception to occur.
          *
          * @return The exception that caused this exception to occur.
          */
-        Throwable throwable();
+        Throwable cause();
 
         /**
          * Specifies the details of this exception.
@@ -107,22 +111,22 @@ public class SdkException extends RuntimeException {
         }
 
 
-        public Throwable getThrowable() {
+        public Throwable getCause() {
             return throwable;
         }
 
-        public void setThrowable(Throwable throwable) {
+        public void setCause(Throwable throwable) {
             this.throwable = throwable;
         }
 
         @Override
-        public Builder throwable(Throwable throwable) {
+        public Builder cause(Throwable throwable) {
             this.throwable = throwable;
             return this;
         }
 
         @Override
-        public Throwable throwable() {
+        public Throwable cause() {
             return throwable;
         }
 

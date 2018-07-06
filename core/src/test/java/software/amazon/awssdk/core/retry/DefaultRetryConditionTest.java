@@ -53,7 +53,7 @@ public class DefaultRetryConditionTest {
 
     @Test
     public void retriesOnIOException() {
-        assertTrue(shouldRetry(b -> b.exception(SdkClientException.builder().message("IO").throwable(new IOException()).build())));
+        assertTrue(shouldRetry(b -> b.exception(SdkClientException.builder().message("IO").cause(new IOException()).build())));
     }
 
     @Test

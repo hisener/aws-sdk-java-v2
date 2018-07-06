@@ -354,7 +354,7 @@ public final class AwsChunkedEncodingInputStream extends SdkInputStream {
         } catch (Exception e) {
             throw SdkClientException.builder()
                                     .message("Unable to sign the chunked data. " + e.getMessage())
-                                    .throwable(e)
+                                    .cause(e)
                                     .build();
         }
     }
