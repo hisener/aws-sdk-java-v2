@@ -103,19 +103,30 @@ Special notes for collection types, like `List`, `Set`, and `Map`:
 public interface Builder {
     
     /**
+     *  Add options.
+     *  
+     *  <p>
      *  This overrides any option values already configured in the builder.
      */
     Builder options(List<String> options);
     
-    
+    /**
+     * Add a single option to the collection.
+     */
     Builder option(String option);
 
     /**
+     *  Add headers to be set on the HTTP request. 
+     *  
+     *  <p>
      *  This overrides any header values already configured in the builder.
      */
     Builder headers(Map<String, String> headers);
     
     /**
+     *  Add a single header to be set on the HTTP request.
+     *  
+     *  <p>
      *  This overrides any values already configured with this header name in the builder.
      */
     Builder header(String key, String value);
